@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { Router, RouterProvider, createBrowserRouter } from "react-router-dom";
-import Nav from "./Nav.jsx";
+import HookForm1 from "./HookForm1.jsx";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Nav></Nav>,
+        element: <HookForm1></HookForm1>,
       },
     ],
   },
