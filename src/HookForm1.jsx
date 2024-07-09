@@ -3,6 +3,17 @@ import React from "react";
 import { useForm } from "react-hook-form";
 let renderCount = 0;
 
+/*
+
+  What is covered
+
+  take value and submit value
+  validation
+  Custom validation
+  
+
+*/
+
 /* There are two type of validation in react Hook form 
 1. Require Validation
 2. Corner Case validation Like it is an Email or not
@@ -71,8 +82,17 @@ const HookForm1 = () => {
           placeholder="Input Channel URL"
           id="channel"
           className="border-2 mt-2"
-          {...register("channel")}
+          //single Custom validation
+          {...register("channel", {
+            validate: (fieldValue) => {
+              return (
+                fieldValue !== "https://www.google.com" ||
+                "This is not a youtube channel!"
+              );
+            },
+          })}
         />
+        <p>{errors.channel?.message}</p>
         <input
           type="submit"
           className="bg-red-500 text-white px-10 py-4 text-xl font-bold rounded-full"
