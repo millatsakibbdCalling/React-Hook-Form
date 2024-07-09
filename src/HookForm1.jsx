@@ -1,3 +1,6 @@
+// I learn it from
+// https://www.youtube.com/watch?v=tvEeNPy7OVA&list=PLC3y8-rFHvwjmgBr1327BA5bVXoQH-w5s&index=15
+
 import { DevTool } from "@hookform/devtools";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -21,12 +24,19 @@ let renderCount = 0;
 
 const HookForm1 = () => {
   renderCount++;
-  const form = useForm();
-  const { register, control, handleSubmit, formState } = form; //Here All the data will contain inside the register variable and contor are take for devtool
+  // const form = useForm();  //for generel use
+  const form = useForm({
+    //for add default values
+    defaultValues: {
+      userName: "Sakib",
+    },
+  });
+  const { register, control, handleSubmit, formState, reset } = form; //Here All the data will contain inside the register variable and contor are take for devtool
   const { errors } = formState; // Here contains all error of our application form
   const onSubmit = (data) => {
     console.log(data); //Form data are consoled
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -92,12 +102,36 @@ const HookForm1 = () => {
             },
           })}
         />
+        <label htmlFor="disableField">Disabled Field</label>
+        <input
+          type="url"
+          name="disableField"
+          placeholder="Try disabled field"
+          id="disableField"
+          className="border-2 mt-2"
+          //single Custom validation
+          {...register(
+            "channel",
+            {
+              disabled: true,
+            },
+            {
+              validate: (fieldValue) => {
+                return (
+                  fieldValue !== "https://www.google.com" ||
+                  "This is not a youtube channel!"
+                );
+              },
+            }
+          )}
+        />
         <p>{errors.channel?.message}</p>
         <input
           type="submit"
           className="bg-red-500 text-white px-10 py-4 text-xl font-bold rounded-full"
           value="Submit"
         ></input>
+        <input type="button" onClick={() => reset()} value={"Reset"} />
       </form>
       <DevTool control={control}></DevTool>
     </div>
